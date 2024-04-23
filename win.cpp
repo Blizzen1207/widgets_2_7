@@ -36,12 +36,9 @@ Win::Win(QWidget *parent):QWidget(parent)
 
     begin();
 
-    connect(exitButton,SIGNAL(clicked(bool)),
-            this,SLOT(close()));
-    connect(nextButton,SIGNAL(clicked(bool)),
-            this,SLOT(begin()));
-    connect(inputEdit,SIGNAL(returnPressed()),
-            this,SLOT(calc()));
+    connect(exitButton,SIGNAL(clicked(bool)), this,SLOT(close()));
+    connect(nextButton,SIGNAL(clicked(bool)), this,SLOT(begin()));
+    connect(inputEdit,SIGNAL(returnPressed()), this,SLOT(calc()));
 }
 
 void Win::begin()
