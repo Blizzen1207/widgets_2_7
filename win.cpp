@@ -10,7 +10,7 @@ Win::Win(QWidget *parent):QWidget(parent)
     frame->setFrameShape(QFrame::Panel);
     inputLabel = new QLabel("Введите число:", this); // создаем текстовую строку с именем, связываем с окном
     inputEdit = new QLineEdit("",this); // создаем строку ввода начального значения
-    StrValidator *v=new StrValidator(inputEdit); // создаем объект контроля событи1 который прослушивает inputEdit
+    StrValidator *v=new StrValidator(inputEdit); // создаем объект контроля событий который прослушивает inputEdit
     inputEdit->setValidator(v); // устнавливаем валидатор для строки ввода
     outputLabel = new QLabel("Результат:", this); // текст с именем
     outputEdit = new QLineEdit("",this); // текстовое поле с именем
@@ -35,19 +35,20 @@ Win::Win(QWidget *parent):QWidget(parent)
 
     begin(); // обновляем программу
 
-    connect(exitButton, &QPushButton::clicked, this, &Win::close); //сигнал типа клик кнопки exitButton связываем с слотом  close() объекта win
-    connect(nextButton, &QPushButton::clicked, this, &Win::begin); //сигнал типа клик кнопки nextButton связываем с слотом  begin() объекта win
-    connect(inputEdit, &QLineEdit::returnPressed, this, &Win::calc);// сигнал типа нажатие кнопки кнопки exitButton связываем с слотом  close() объекта win
+    connect(exitButton, &QPushButton::clicked, this, &Win::close);  // кнопка "Выход", сигнал - нажатие, слот - закрытие программы
+    connect(nextButton, &QPushButton::clicked, this, &Win::begin);  // кнопка "Следующее", сигнал - нажатие, слот - обновление интерфейса программы
+    connect(inputEdit, &QLineEdit::returnPressed, this, &Win::calc);// поле ввода, сигнал - начажите Enter, слот - вычисление
 }
 
 void Win::begin()
 {
     inputEdit->clear(); // очищаем контент на линии ввода
+    outputEdit->clear();
     nextButton->setEnabled(false); // опрделяет включен ли виджет(вкл обрабатывает события с клав и мыши, выкл не обрабатывает)
     nextButton->setDefault(false); // опередяет является ли кнопка кнопокой по умолчанию
     inputEdit->setEnabled(true);
-    outputLabel->setVisible(false); // определяет является ли виджет видимым
-    outputEdit->setVisible(false);
+    outputLabel->setVisible(true); // определяет является ли виджет видимым
+    outputEdit->setVisible(true);
     outputEdit->setEnabled(false);
     inputEdit->setFocus(); // передает фокус ввода с клавиатуры этому виджету
 }
@@ -63,8 +64,8 @@ void Win::calc() // вычисление значений
         str.setNum(r); // Задает строке напечатанное значение в указанном , и возвращает ссылку на строку
         outputEdit->setText(str);
         inputEdit->setEnabled(false);
-        outputLabel->setVisible(true);
-        outputEdit->setVisible(true);
+        //outputLabel->setVisible(true);
+        //outputEdit->setVisible(true);
         nextButton->setDefault(true);
         nextButton->setEnabled(true);
         nextButton->setFocus();
